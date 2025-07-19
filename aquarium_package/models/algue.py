@@ -28,6 +28,7 @@ class AlgueORM(Base):
         self.id = id
         self.is_alive = is_alive
         self.algue_name = name
+    
 
     def viellir(self):
         self.pv += 1

@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
         "./aquarium_package"
-    ]
+    ],
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }

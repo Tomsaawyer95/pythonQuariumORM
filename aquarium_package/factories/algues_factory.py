@@ -6,7 +6,17 @@ def create_algue(   pv : int = 10,
                     algue_aquarium_id : int | None = None,
                     name : str | None = None
                     ):
-    """    Crée une instance d'Algue avec les paramètres fournis. """
-    return AlgueORM(pv=pv, id=id,age=age, algue_aquarium_id=algue_aquarium_id, name=name)
+   """
+   Args:
+       pv (int, optional): PV number of the seaweed. Defaults to 10
+       age (int, optional): Age of the seaweed. Defaults to 0
+       id (int, optional): Id of the seaweed. Defaults to None
+       algue_aquarium_id (int, optional): Id of the seaweed. Defaults to None
+       name (str, optional): Name of the seaweed. Defaults to None
+
+   Returns:
+       AlgueORM
+   """
+   return AlgueORM(pv=pv, id=id,age=age, algue_aquarium_id=algue_aquarium_id, name=name)
     
     

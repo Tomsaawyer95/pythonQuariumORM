@@ -2,7 +2,7 @@ from aquarium_package.ecosystem import Aquarium
 from aquarium_package.models import FishORM, AlgueORM
 from sqlalchemy.orm import Session
 
-def save_aquarium(aquarium: Aquarium):
+def save_aquarium_to_db(aquarium: Aquarium):
     aquarium.management_session.save_session()
 
 def load_aquarium(id: int) -> Aquarium:

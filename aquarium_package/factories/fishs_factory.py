@@ -16,18 +16,24 @@ def create_fish_type(
     """permet de creer un type de poisson a partir des informations
     
     Args:
-        type_fish (Type): Type de poisson.
-        sexe (Sexe, optional): Sexe du poisson. Par défaut None.
-        age (int, optional): Âge du poisson. Par défaut 0.
-        pv (int, optional): Points de vie restants du poisson. Par défaut 20.
-        name (str, optional): Nom du poisson à créer. Par défaut une chaîne vide.
-        aquarium_id (int,optional) : donne l'aquarium auquel le poisson est assigné
+        type_fish (Type : Enum): Type of fish from Enum Type
+        sexe (Sexe, optional): Sexe of fish from Enum Sexe. Defaults to None.
+        age (int, optional): Age of fish. Defaults to 0.
+        pv (int, optional): PV of fish. Defaults to 10.
+        name (str, optional): Name of fish . Defaults to None
+        aquarium_id (int,optional) : give the assignation of aquarium to the fish. Defaults to None.
 
     Raises:
-        ValueError: erreur renvoyer si le type de poisson n'est pas dans la liste
+        ValueError: return error if type_fish isn't in the Enum Type of fish
 
     Returns:
-        list[Fish]: Liste de poissons (instances de Carpe, Thon, etc.)
+        Fish : instance of under-class fish:
+            - Carpe
+            - Thon
+            - PoissonClown
+            - Sole
+            - Merou
+            - PoissonClown
     """
     if type_fish is None:
         type_fish = random.choice(list(Type))

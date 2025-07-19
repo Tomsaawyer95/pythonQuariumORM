@@ -1,6 +1,9 @@
 from aquarium_package.utils import Session
 
 class AquariumSessionManger:
+    """
+    AquariumSessionManger
+    """
     def __init__(self):
         self.session = Session()
 

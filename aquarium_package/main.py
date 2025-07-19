@@ -77,7 +77,7 @@ def do_step(aquarium: Aquarium):
                 proie = None
 
             if proie and proie.is_alive and type(proie) != type(fish):
-                fish.manger(proie)
+                fish.eat(proie)
                 if proie.pv <= 0:
                     proie.isDead()
             else:
@@ -87,7 +87,7 @@ def do_step(aquarium: Aquarium):
                 else:
                     print(f"{fish.name} n'a rien trouvé a manger")
                     pass
-        # Traitement pour les poissons encore vivant se reproduisent si ils n'ont pas tenté de manger
+        # Traitement pour les poissons encore vivant se reproduisent si ils n'ont pas tenté de eat
         elif fish.is_alive:
             proie = random.choice(alive_fishs)
             if not(fish is proie) and proie.is_alive and type(proie) == type(fish):
