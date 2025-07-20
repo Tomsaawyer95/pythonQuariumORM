@@ -3,13 +3,14 @@ import os
 from aquarium_package.models import Type, Sexe
 
 import pandas as pd
-from sqlalchemy import create_engine,Table, Column, Integer, String, MetaData, Boolean, ForeignKey
+from sqlalchemy import create_engine,Table, Column, Integer, String, MetaData, Boolean
 from dotenv import load_dotenv
+
 
 
 load_dotenv()
 HOST = os.getenv("PSQL_HOST")
-PORT = int(os.getenv("PSQL_PORT"))
+PORT = os.getenv("PSQL_PORT")
 DATABASE = os.getenv("PSQL_DB")
 USER = os.getenv("PSQL_USER")
 PASSWORD = os.getenv("PSQL_PASSWORD")
@@ -42,4 +43,4 @@ Table(
     Column("is_alive", Boolean)
 )
 
-Base.metadata.create_all(engine)
+metadata.create_all(engine)

@@ -18,6 +18,39 @@ from aquarium_package.services import load_aquarium, save_aquarium_to_db
 
 
 class AquariumController:
+    """Controller class for managing the aquarium application UI and logic.
+    This class connects the UI elements to the underlying aquarium model,
+    handles user interactions, and updates the UI accordingly.
+    Args:
+        window_app: The main window application instance containing UI widgets.
+    Attributes:
+        window_app: Reference to the main window application.
+        current_aquarium: The currently loaded Aquarium instance.
+        radio_fish_button_group: QButtonGroup for selecting fish mode (random or custom).
+        active_radio_id: The currently selected radio button ID.
+    Methods:
+        setup_ui():
+            Connects UI buttons and radio group to their respective event handlers.
+        on_radio_fish_id_changed(id):
+            Handles changes in fish mode selection (random or custom).
+        reset_form():
+            Clears the fish input form fields.
+        lock_form(value: bool):
+            Enables or disables fish input form fields based on the mode.
+        initialize_aquarium():
+            Loads an aquarium by ID from the input field and updates the UI.
+        refresh_table():
+            Updates the fish and algae tables in the UI with current aquarium data.
+        add_fish_to_aquarium():
+            Adds a new fish to the aquarium using form input values.
+        add_algue_to_aquarium():
+            Adds a new algae to the aquarium using form input values.
+        do_several_step():
+            Performs multiple simulation steps on the aquarium and refreshes the UI.
+        save_aquarium():
+            Saves the current aquarium state to the database and resets the UI.
+        """
+    
     def __init__(self, window_app):
         self.window_app = window_app
         self.current_aquarium = Aquarium(-1)

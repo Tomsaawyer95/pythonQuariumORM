@@ -96,6 +96,8 @@ class FishORM(Base):
     def viellir(self):
         self.pv -= 1
         self.age += 1
+        if self.pv <= 0 or self.age >= 20:
+            self.isDead()
 
     def reproduce(self, other_fish):
         raise NotImplementedError(
@@ -103,6 +105,20 @@ class FishORM(Base):
         )
 
     def to_dict(self):
+        """
+        Serializes the Fish object to a dictionary.
+        Returns:
+            dict: A dictionary containing the fish's attributes:
+                - id (int): Unique identifier of the fish.
+                - name (str): Name of the fish.
+                - type_fish (str): Type or species of the fish.
+                - sexe (str): Sex of the fish.
+                - age (int): Age of the fish.
+                - pv (int): Health points of the fish.
+                - fish_aquarium_id (int): Identifier of the aquarium the fish belongs to.
+                - is_alive (bool): Whether the fish is alive.
+        """
+
         return {
             "id": self.id,
             "name": self.name,
