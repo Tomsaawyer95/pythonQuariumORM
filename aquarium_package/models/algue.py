@@ -6,6 +6,7 @@ from aquarium_package.utils.psql_data_manager_orm import Base
 
 
 class AlgueORM(Base):
+    
     __tablename__ = "algues"
 
     id = Column(Integer, primary_key=True)
@@ -18,7 +19,7 @@ class AlgueORM(Base):
     def __init__(
         self,
         id: int | None = None,
-        pv: int = 10,
+        pv: int = 5,
         algue_aquarium_id: int | None = None,
         name: str | None = None,
         age: int = 0,
@@ -40,6 +41,10 @@ class AlgueORM(Base):
 
     def isDead(self):
         self.is_alive = False
+
+    def duplicate(self):
+        self.pv = self.pv // 2
+        return AlgueORM(pv=self.pv, age=0, algue_aquarium_id=self.algue_aquarium_id) # type: ignore
 
     def to_dict(self):
         return {

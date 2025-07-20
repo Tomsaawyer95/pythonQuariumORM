@@ -2,12 +2,12 @@ import random
 
 from faker import Faker
 from sqlalchemy import Column, Integer, String, Boolean
+
 from aquarium_package.utils.psql_data_manager_orm import Base
-from aquarium_package.models.enums import Type, Sexe
+from aquarium_package.models import Type, Sexe
+
 
 faker = Faker()
-
-
 class FishORM(Base):
     """
     FishORM is an SQLAlchemy ORM model representing a fish entity in an aquarium.

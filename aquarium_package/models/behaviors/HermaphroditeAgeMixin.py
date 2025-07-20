@@ -15,6 +15,11 @@ class HermaphroditeAgeMixin():
             return True
         else :
             return False
+    
+    def viellir(self):
+        super().viellir()
+        if self.age == 15:
+            self.changed_sexe()
 
     def changed_sexe(self):
         """
@@ -22,7 +27,7 @@ class HermaphroditeAgeMixin():
             Returns:
                 Sexe of fish
         """
-        if self.sexe == Sexe.MALE:
-            self.sexe = Sexe.FEMALE
-        elif self.sexe == Sexe.FEMALE:
-            self.sexe = Sexe.MALE
+        if self.sexe == Sexe.MALE.name:
+            self.sexe = Sexe.FEMALE.name
+        elif self.sexe == Sexe.FEMALE.name:
+            self.sexe = Sexe.MALE.name

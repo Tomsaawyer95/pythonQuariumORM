@@ -4,7 +4,7 @@ from aquarium_package.models import Type, Sexe, FishORM
 from aquarium_package.models.fishs import Carpe,Thon,PoissonClown,Sole,Merou,Bar
 
 def create_fish_type(
-                        type_fish : Type = None,
+                        type_fish : Type | None = None,
                         sexe : Sexe | None = None,
                         age : int = 0,
                         pv : int = 10,

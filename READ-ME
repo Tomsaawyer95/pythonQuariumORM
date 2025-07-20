@@ -1,0 +1,26 @@
+# PythonQuarium_RebaseORM
+
+PythonQuarium_RebaseORM is an aquarium simulation application built with Python. It allows users to create, manage, and observe virtual aquariums with various fish and plants. The project uses an ORM (Object Relational Mapping) for data management.
+
+## Features
+
+- Create and customize aquariums
+- Add, remove, and manage fish and plants
+- Simulate aquarium life cycles and interactions
+- Save and load aquarium states using ORM
+- User-friendly interface
+
+## Installation
+
+1. Clone the repository:
+    ```
+    git clone https://github.com/yourusername/PythonQuarium_RebaseORM.git
+    ```
+2. Install dependencies:
+    ```
+    pip install -r requirements.txt
+    ```
+
+## Usage
+
+Run the app application:

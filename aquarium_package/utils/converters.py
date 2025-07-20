@@ -1,6 +1,4 @@
 import pandas as pd
-from aquarium_package.models import Type, Sexe
-from aquarium_package.factories import create_fish_type, create_algue
 
 def convert_to_df(aquarium):
     if aquarium.algues_list == []:

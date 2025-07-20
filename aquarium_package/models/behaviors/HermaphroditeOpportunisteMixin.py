@@ -4,7 +4,7 @@ from aquarium_package.models.enums import Sexe
 class HermaphroditeOpportunisteMixin:
     def reproduce(self, fish):
         """
-         Args:
+        Args:
             fish (FishORM): fish with which he reproduces
         Returns:
             bool : True

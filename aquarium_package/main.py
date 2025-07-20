@@ -14,11 +14,12 @@ from aquarium_package.models.behaviors import (
     HermaphroditeOpportunisteMixin,
 )
 from aquarium_package.models import FishParentORM
-from aquarium_package.factories import create_fish_type, create_algue
+from aquarium_package.factories import create_fish_type
 
 # from aquarium_package.utils import json_data_manager
 from aquarium_package.ecosystem import Aquarium
-from aquarium_package.services import load_aquarium, save_aquarium_to_db
+from aquarium_package.services import load_aquarium, save_aquarium_to_db,handle_fishs_eating, handle_fishs_reproduction
+
 
 Base.metadata.create_all(engine, checkfirst=True)
 
@@ -43,93 +44,36 @@ def print_form(s, v=15):
 
 def do_step(aquarium: Aquarium):
     """
-    Simulates a single step in the aquarium ecosystem, updating the state of algae and fish.
-    This function performs the following actions:
-    - Ages all living algae and checks for death by old age (age >= 11).
-    - Duplicates algae with sufficient health points (pv >= 10), splitting their health between the original and the new algae.
-    - Ages all living fish and checks for death by old age (age >= 20) or low health (pv <= 0).
-    - Changes the sex of hermaphroditic fish at a specific age (age == 15).
-    - Allows fish with low health (0 < pv <= 5) to attempt eating according to their diet (herbivores eat algae, carnivores eat other fish).
-    - Handles failed eating attempts with appropriate messages.
-    - Allows living fish to attempt reproduction with other fish of the same type, with a chance of success.
-    - Adds new algae and fish to the aquarium and updates their state accordingly.
+    Performs a simulation step for the given aquarium.
+    This function advances the state of the aquarium by:
+    1. Aging all alive algae and handling their duplication.
+    2. Aging all alive fish.
+    3. Shuffling the list of alive fish to randomize interactions.
+    4. For each alive fish:
+        - If its health points (pv) are between 1 and 5, it attempts to eat.
+        - If the fish is alive, it attempts to reproduce.
     Args:
-        aquarium (Aquarium): The aquarium instance containing algae and fish to be processed.
+        aquarium (Aquarium): The aquarium instance to update.
     Returns:
         None
     """
-
     for algue in aquarium.get_alive_algues():
         algue.viellir()
-
-        # Duplication de l'algue si Pv >= 10 avec la moitier des points de vie
-        if algue.pv >= 10:
-            new_pv = math.floor(algue.pv / 2)  # type: ignore
-            algue.pv = new_pv
-            new_algue = create_algue(pv=new_pv, algue_aquarium_id=aquarium.id)
-
-            aquarium.management_session.add_to_session(new_algue)
-            aquarium.management_session.flush_to_session(new_algue)
-            new_algue.name = f"Algue-{new_algue.id}"  # type: ignore
-            aquarium.algues_list.append(new_algue)
+        aquarium.handle_algue_duplication(algue)
 
     for fish in aquarium.get_alive_fishs():
         fish.viellir()
-        if fish.pv <= 0 or fish.age >= 20:
-            fish.isDead()
-        elif isinstance(fish, HermaphroditeAgeMixin) and fish.age == 15:
-            fish.changed_sexe()
 
     alive_fishs = aquarium.get_alive_fishs()
     random.shuffle(alive_fishs)
     alive_algues = aquarium.get_alive_algues()
 
     for fish in alive_fishs:
-        # Traitement pour que les poissons encore vivant mangent selon leur régime alimentaire si ils respectent
-        # la condition de point de vie
         if 0 < fish.pv <= 5:
-            if isinstance(fish, Herbivore) and alive_algues:
-                proie = random.choice(alive_algues)
-            elif isinstance(fish, Carnivore):
-                proie = random.choice(alive_fishs)
-            else:
-                proie = None
-
-            if proie and proie.is_alive and type(proie) != type(fish):  # type: ignore
-                fish.eat(proie)
-                if proie.pv <= 0:
-                    proie.isDead()
-            else:
-                if proie:
-                    print(
-                        f"{fish.name} a essayer de manger a {proie.name} mais a échoué"
-                    )
-                    pass
-                else:
-                    print(f"{fish.name} n'a rien trouvé a manger")
-                    pass
-        # Traitement pour les poissons encore vivant se reproduisent si ils n'ont pas tenté de eat
+            handle_fishs_eating(fish,alive_fishs,alive_algues)
         elif fish.is_alive:
-            proie = random.choice(alive_fishs)
-            if not (fish is proie) and proie.is_alive and type(proie) == type(fish):  # type: ignore
-
-                # Definir une chance de reussite :
-                if fish.reproduce(proie) and random.random() > 0.90:
-                    new_fish = create_fish_type(
-                        type_fish=fish.type_fish_enum, fish_aquarium_id=aquarium.id
-                    )
-                    aquarium.management_session.add_to_session(new_fish)
-                    aquarium.management_session.flush_to_session(new_fish)
-                    aquarium.management_session.add_to_session(
-                        FishParentORM(new_fish, fish, proie)
-                    )
-                    print(
-                        f"{fish.name} s'est reproduit avec {proie.name} et a donnée {new_fish.name}"
-                    )
-                    aquarium.add_fish(new_fish)
-
-    # aquarium.afficher_df()
-
+            handle_fishs_reproduction(aquarium,fish, alive_fishs)
+            
 
 if __name__ == "__main__":
     load_dotenv()

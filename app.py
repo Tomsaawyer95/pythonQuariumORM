@@ -153,14 +153,12 @@ class AquariumController:
 
         for i, fish in enumerate(self.current_aquarium.get_alive_fishs()):
             self.window_app.tb_fishs.setItem(i, 0, QTableWidgetItem(str(fish.id)))
-            self.window_app.tb_fishs.setItem(i, 1, QTableWidgetItem(fish.name))
+            self.window_app.tb_fishs.setItem(i, 1, QTableWidgetItem(str(fish.name)))
             self.window_app.tb_fishs.setItem(i, 2, QTableWidgetItem(str(fish.age)))
             self.window_app.tb_fishs.setItem(i, 3, QTableWidgetItem(str(fish.pv)))
-            self.window_app.tb_fishs.setItem(i, 4, QTableWidgetItem(fish.sexe))
-            self.window_app.tb_fishs.setItem(i, 5, QTableWidgetItem(fish.type_fish))
-            self.window_app.tb_fishs.setItem(
-                i, 6, QTableWidgetItem(str(fish.fish_aquarium_id))
-            )
+            self.window_app.tb_fishs.setItem(i, 4, QTableWidgetItem(str(fish.sexe)))
+            self.window_app.tb_fishs.setItem(i, 5, QTableWidgetItem(str(fish.type_fish)))
+            self.window_app.tb_fishs.setItem(i, 6, QTableWidgetItem(str(fish.fish_aquarium_id)))
 
         list_column_algues = ["id", "name", "age", "pv", "aquarium_id"]
         self.window_app.tb_algues.setColumnCount(len(list_column_algues))
@@ -174,7 +172,7 @@ class AquariumController:
 
         for i, algue in enumerate(self.current_aquarium.get_alive_algues()):
             self.window_app.tb_algues.setItem(i, 0, QTableWidgetItem(str(algue.id)))
-            self.window_app.tb_algues.setItem(i, 1, QTableWidgetItem(algue.name))
+            self.window_app.tb_algues.setItem(i, 1, QTableWidgetItem(str(algue.name)))
             self.window_app.tb_algues.setItem(i, 2, QTableWidgetItem(str(algue.age)))
             self.window_app.tb_algues.setItem(i, 3, QTableWidgetItem(str(algue.pv)))
             self.window_app.tb_algues.setItem(
@@ -225,7 +223,7 @@ class AquariumController:
         pv = (
             int(self.window_app.le_algue_pv.text())
             if self.window_app.le_algue_pv.text()
-            else 10
+            else 5
         )
 
         self.current_aquarium.add_algue(age, pv)

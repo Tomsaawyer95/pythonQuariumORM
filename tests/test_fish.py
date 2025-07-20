@@ -16,6 +16,31 @@ def test_viellir_incremente_age_et_diminue_pv():
     assert fish.pv == 9, "Les points de vie devraient diminuer de 1"
 
 
+def test_viellir_meurt_si_pv_inferieur_zero():
+    fish = FishORM(name="Nemo", age=2, pv=1)
+    fish.viellir()
+    assert (
+        fish.is_alive is False
+    ), "Le poisson devrait être mort si les points de vie sont à 0 ou moins"
+
+
+def test_viellir_meurt_si_age_depasse_20():
+    fish = FishORM(name="Nemo", age=19, pv=10)
+    fish.viellir()
+    assert (
+        fish.is_alive is False
+    ), "Le poisson devrait être mort si l'âge est supérieur ou égal à 20"
+
+
+@pytest.mark.parametrize("FishClass", [Bar, Merou])
+def test_viellir_hermaphrodite_age_change_sexe(FishClass):
+    fish = Bar(name="Nemo", age=14, pv=10, sexe=Sexe.MALE)
+    fish.viellir()
+    assert (
+        fish.sexe == Sexe.FEMALE.name
+    ), "Le sexe du poisson hermaphrodite devrait changer en féminin"
+
+
 @pytest.mark.parametrize("FishClass", [Carpe, Thon, Merou, Bar])
 def test_reproduce_creates_new_fish_HermaphroditeAge_and_MonoSexe_OK(FishClass):
     fish1 = FishClass(name="Fihs1", age=2, pv=10, sexe=Sexe.FEMALE)
