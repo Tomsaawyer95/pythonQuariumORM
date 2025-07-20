@@ -1,0 +1,42 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Test cache
+.pytest_cache/
+.mypy_cache/
+.coverage
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+htmlcov/
+
+# Virtual envs
+.env
+.venv/
+venv/
+env/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# IDEs
+.vscode/
+.idea/
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# System
+.DS_Store
+Thumbs.db
+
+# SQLAlchemy or SQLite files (if any)
+*.sqlite3
+*.db
